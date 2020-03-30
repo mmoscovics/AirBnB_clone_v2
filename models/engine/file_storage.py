@@ -66,5 +66,5 @@ class FileStorage:
         if it’s inside
         """
         if obj is not None:
-            del self.__objects[obj.__class__.__name__ + '.'  + obj.id]
+            del self.__objects[obj.__class__.__name__ + '.' + obj.id]
             self.save()
