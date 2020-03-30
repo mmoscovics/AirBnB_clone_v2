@@ -65,6 +65,6 @@ class FileStorage:
         """delete obj from __objects
         if it’s inside
         """
-        state = '{}.{}'.format(type(obj).__name__, obj.id)
-        if obj:
-            del self.__objects[state]
+        if obj is not None:
+            del self.__objects[obj.__class__.__name__ + '.'  + obj.id]
+            self.save()
