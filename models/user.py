@@ -1,10 +1,8 @@
 #!/usr/bin/python3
 """This is the user class"""
-from models.base_model import BaseModel
 from os import getenv
 from models.base_model import BaseModel, Base
 from models.city import City
-import models
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
