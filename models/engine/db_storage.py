@@ -16,9 +16,7 @@ from os import getenv
 all_classes = {"City": City,
            "State": State,
            "Place": Place,
-           "User": User,
-           "Review": Review,
-           "Amenity": Amenity}
+           "User": User}
 
 class DBStorage:
     """
@@ -51,13 +49,21 @@ class DBStorage:
         return_dict = {}
         query = []
         if cls:
-             for name, value in all_classes.items():
+            for name, value in all_classes.items():
                 if name == cls:
                     query = self.__session.query(value)
                     for obj in query:
                         key = name + '.' + obj.id
                         return_dict[key] = obj
-             return return_dict          
+            return return_dict
+
+        else:
+            for name, value in all_classes.items():
+                query = self.__session.query(value)
+                for obj in query:
+                    key = name + '.' + obj.id
+                    return_dict[key] = obj
+        return return_dict
 
     def new(self, obj):
         """
