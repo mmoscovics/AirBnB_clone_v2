@@ -14,9 +14,10 @@ from sqlalchemy.orm import sessionmaker, scoped_session
 from os import getenv
 
 all_classes = {"City": City,
-           "State": State,
-           "Place": Place,
-           "User": User}
+               "State": State,
+               "Place": Place,
+               "User": User}
+
 
 class DBStorage:
     """
@@ -36,7 +37,7 @@ class DBStorage:
                                               getenv('HBNB_MYSQL_PWD'),
                                               getenv('HBNB_MYSQL_HOST'),
                                               getenv('HBNB_MYSQL_DB')),
-                                      pool_pre_ping=True, echo=True)
+                                      pool_pre_ping=True)
 
         if getenv('HBNB_ENV') == 'test':
             Base.metadata.drop_all(self.__engine)
