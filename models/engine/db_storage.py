@@ -31,8 +31,8 @@ class DBStorage:
                                       .format(getenv('HBNB_MYSQL_USER'),
                                               getenv('HBNB_MYSQL_PWD'),
                                               getenv('HBNB_MYSQL_HOST'),
-                                              getenv('HBNB_MYSQL_DB'),
-                                              pool_pre_ping=True))
+                                              getenv('HBNB_MYSQL_DB')),
+                                              pool_pre_ping=True)
 
         if getenv('HBNB_ENV') == 'test':
             Base.metadata.drop_all(self.__engine)
@@ -42,6 +42,15 @@ class DBStorage:
         Query on the current database session (self.__session)
         all objects depending of the class name (argument cls)
         """
+        new_dict = {}
+        query = ["User", "State", "City", "Amenity",
+                 "Place", "Review"]
+        for item in query:
+            query = self.__session.query(item).all()
+            for value in query:
+                key = "{}.{}".format(type(value).__name__, value.id)
+                new_dict[key] = value
+        return new_dict
 
     def new(self, obj):
         """
