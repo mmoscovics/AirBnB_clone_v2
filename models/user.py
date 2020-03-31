@@ -10,7 +10,6 @@ from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
 
 
-
 class User(BaseModel, Base):
     """This is the class for user
     Attributes:
@@ -22,8 +21,7 @@ class User(BaseModel, Base):
 
     __tablename__ = 'users'
 
-    if getenv('HBNB_TYPE_STORAGE') == 'db':
-        email = Column(String(128), nullable=False)
-        password = Column(String(128), nullable=False)
-        first_name = Column(String(128), nullable=False)
-        last_name = Column(String(128), nullable=False)
+    email = Column(String(128), nullable=False)
+    password = Column(String(128), nullable=False)
+    first_name = Column(String(128), nullable=False)
+    last_name = Column(String(128), nullable=False)
