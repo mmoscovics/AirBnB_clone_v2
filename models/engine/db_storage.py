@@ -13,6 +13,12 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
 from os import getenv
 
+all_classes = {"City": City,
+           "State": State,
+           "Place": Place,
+           "User": User,
+           "Review": Review,
+           "Amenity": Amenity}
 
 class DBStorage:
     """
@@ -32,7 +38,7 @@ class DBStorage:
                                               getenv('HBNB_MYSQL_PWD'),
                                               getenv('HBNB_MYSQL_HOST'),
                                               getenv('HBNB_MYSQL_DB')),
-                                              pool_pre_ping=True)
+                                      pool_pre_ping=True, echo=True)
 
         if getenv('HBNB_ENV') == 'test':
             Base.metadata.drop_all(self.__engine)
@@ -42,15 +48,16 @@ class DBStorage:
         Query on the current database session (self.__session)
         all objects depending of the class name (argument cls)
         """
-        new_dict = {}
-        query = ["User", "State", "City", "Amenity",
-                 "Place", "Review"]
-        for item in query:
-            query = self.__session.query(item).all()
-            for value in query:
-                key = "{}.{}".format(type(value).__name__, value.id)
-                new_dict[key] = value
-        return new_dict
+        return_dict = {}
+        query = []
+        if cls:
+             for name, value in all_classes.items():
+                if name == cls:
+                    query = self.__session.query(value)
+                    for obj in query:
+                        key = name + '.' + obj.id
+                        return_dict[key] = obj
+             return return_dict          
 
     def new(self, obj):
         """
