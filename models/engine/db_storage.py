@@ -16,7 +16,8 @@ from os import getenv
 all_classes = {"City": City,
                "State": State,
                "Place": Place,
-               "User": User}
+               "User": User,
+	           "Review": Review}
 
 
 class DBStorage:
