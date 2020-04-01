@@ -25,7 +25,7 @@ class Place(BaseModel, Base):
         longitude: longitude in float
         amenity_ids: list of Amenity ids
     """
-    metadata = Base.metadata
+    """ metadata = Base.metadata
 
     place_amenity = Table(
         'place_amenity', metadata,
@@ -36,7 +36,7 @@ class Place(BaseModel, Base):
         Column('amenity_id', String(60),
                ForeignKey('amenities.id'),
                primary_key=True,
-               nullable=False))
+               nullable=False)) """
 
     __tablename__ = 'places'
 
