@@ -21,10 +21,10 @@ class State(BaseModel, Base):
         cities = relationship('City', cascade='all, delete',
                               backref='state')
     else:
-
+        
         @property
         def cities(self):
-            """[<8;62;23m]
+            """
             Returns the list of City instances with
             state_id equals to the current State.id
             """
