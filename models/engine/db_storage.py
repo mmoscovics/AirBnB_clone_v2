@@ -17,8 +17,7 @@ all_classes = {"City": City,
                "State": State,
                "Place": Place,
                "User": User,
-	           "Review": Review,
-               "Amenity": Amenity}
+	           "Review": Review}
 
 
 class DBStorage:
