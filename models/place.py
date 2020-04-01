@@ -4,6 +4,7 @@ from models.base_model import BaseModel
 from os import getenv
 from models.base_model import BaseModel, Base
 from models.city import City
+from models.review import Review
 import models
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, Float, String, ForeignKey
@@ -51,7 +52,7 @@ class Place(BaseModel, Base):
             name_inst = inst[0]
             if name_inst == "Review":
                 if value.place_id == self.id:
-                    city_list.append(value)
+                    review_list.append(value)
         return review_list
 
     
