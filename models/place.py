@@ -6,7 +6,7 @@ from models.base_model import BaseModel, Base
 from models.city import City
 import models
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, Float, String, ForeignKey
+from sqlalchemy import Column, Integer, Float, String, ForeignKey, Table
 from sqlalchemy.orm import relationship
 
 
@@ -25,6 +25,18 @@ class Place(BaseModel, Base):
         longitude: longitude in float
         amenity_ids: list of Amenity ids
     """
+    metadata = Base.metadata
+
+    place_amenity = Table(
+        'place_amenity', metadata,
+        Column('place_id', String(60),
+               ForeignKey('places.id'),
+               primary_key=True,
+               nullable=False),
+        Column('amenity_id', String(60),
+               ForeignKey('amenities.id'),
+               primary_key=True,
+               nullable=False))
 
     __tablename__ = 'places'
 
@@ -38,20 +50,29 @@ class Place(BaseModel, Base):
     price_by_night =  Column(Integer, nullable=False, default=0)
     latitude =  Column(Float)
     longitude =  Column(Float)
-    reviews = relationship('Review', cascade='all, delete',
-                           backref='place')
-    
+    reviews = relationship('Review', backref='place')
+
     @property
     def reviews(self):
         """returns a list of  review instances with place_id"""
         review_list = []
-
-        for key, value in models.storage().all():
-            inst = key.split('.')
-            name_inst = inst[0]
-            if name_inst == "Review":
-                if value.place_id == self.id:
-                    city_list.append(value)
+        review_dict = models.storage.all(Review)
+        for key, value in review_dict.items():
+                review_list.append(review_dict[key])
         return review_list
 
-    
+    @property
+    def amenities(self):
+        """
+        Returns the list of Amenity instances 
+        based on the attribute amenity_ids
+        """
+        return self.amenity_ids
+
+    @amenities.setter
+    def amenities(self, obj):
+        """
+        Add id to amenity_ids
+        """
+        if isinstance(obj, 'Amenities'):
+            self.amenity_ids.append(obj.id)
