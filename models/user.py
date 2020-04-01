@@ -2,7 +2,6 @@
 """This is the user class"""
 from os import getenv
 from models.base_model import BaseModel, Base
-from models.city import City
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
@@ -23,3 +22,5 @@ class User(BaseModel, Base):
     password = Column(String(128), nullable=False)
     first_name = Column(String(128))
     last_name = Column(String(128))
+    places = relationship('Place', cascade='all, delete',
+                          backref='user')
