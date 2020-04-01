@@ -4,12 +4,23 @@ from models.base_model import BaseModel
 from os import getenv
 from models.base_model import BaseModel, Base
 from models.city import City
-from models.review import Review
 import models
+from models.amenity import Amenity
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, Float, String, ForeignKey, Table
 from sqlalchemy.orm import relationship
 
+metadata = Base.metadata
+
+place_amenity = Table('place_amenity', metadata,
+    Column('place_id', String(60),
+            ForeignKey('places.id'),
+            primary_key=True,
+            nullable=False),
+    Column('amenity_id', String(60),
+            ForeignKey('amenities.id'),
+            primary_key=True,
+            nullable=False))
 
 class Place(BaseModel, Base):
     """This is the class for Place
@@ -26,18 +37,6 @@ class Place(BaseModel, Base):
         longitude: longitude in float
         amenity_ids: list of Amenity ids
     """
-    """ metadata = Base.metadata
-
-    place_amenity = Table(
-        'place_amenity', metadata,
-        Column('place_id', String(60),
-               ForeignKey('places.id'),
-               primary_key=True,
-               nullable=False),
-        Column('amenity_id', String(60),
-               ForeignKey('amenities.id'),
-               primary_key=True,
-               nullable=False)) """
 
     __tablename__ = 'places'
 
@@ -46,30 +45,29 @@ class Place(BaseModel, Base):
     name = Column(String(128), nullable=False)
     description = Column(String(1024), nullable=True)
     number_rooms = Column(Integer, nullable=False, default=0)
-    number_bathrooms = Column(Integer, nullable=False, default=0)
-    max_guest = Column(Integer, nullable=False, default=0)
-    price_by_night = Column(Integer, nullable=False, default=0)
-    latitude = Column(Float)
-    longitude = Column(Float)
+    number_bathrooms =  Column(Integer, nullable=False, default=0)
+    max_guest =  Column(Integer, nullable=False, default=0)
+    price_by_night =  Column(Integer, nullable=False, default=0)
+    latitude =  Column(Float)
+    longitude =  Column(Float)
     reviews = relationship('Review', backref='place')
+    amenities = relationship('Amenity', secondary='place_amenity',
+                                    back_populates='place_amenities', viewonly=False)
+    amenity_ids = []
 
     @property
     def reviews(self):
         """returns a list of  review instances with place_id"""
         review_list = []
-
-        for key, value in models.storage().all():
-            inst = key.split('.')
-            name_inst = inst[0]
-            if name_inst == "Review":
-                if value.place_id == self.id:
-                    review_list.append(value)
+        review_dict = models.storage.all(Review)
+        for key, value in review_dict.items():
+                review_list.append(review_dict[key])
         return review_list
 
     @property
     def amenities(self):
         """
-        Returns the list of Amenity instances
+        Returns the list of Amenity instances 
         based on the attribute amenity_ids
         """
         return self.amenity_ids
@@ -79,5 +77,5 @@ class Place(BaseModel, Base):
         """
         Add id to amenity_ids
         """
-        if isinstance(obj, 'Amenities'):
+        if isinstance(obj, Amenity):
             self.amenity_ids.append(obj.id)
