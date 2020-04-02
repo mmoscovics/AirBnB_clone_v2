@@ -24,6 +24,9 @@ all_classes = {"City": City,
 class DBStorage:
     """
     Handles Database engine
+    Attributes:
+	__engine: engine for the database
+	__session: session of the database
     """
 
     __engine = None
