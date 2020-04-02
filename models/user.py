@@ -16,8 +16,8 @@ class User(BaseModel, Base):
         password: password for you login
         first_name: first name
         last_name: last name
-	places: relationship to place
-	reviews: relationship to review
+        places: relationship to place
+        reviews: relationship to review
     """
 
     __tablename__ = 'users'
@@ -26,8 +26,8 @@ class User(BaseModel, Base):
     password = Column(String(128), nullable=False)
     first_name = Column(String(128), nullable=True)
     last_name = Column(String(128), nullable=True)
-    
+
     places = relationship('Place', cascade='all, delete',
-                            backref='user')
+                          backref='user')
     reviews = relationship('Review', cascade='all, delete',
-                            backref='user')
+                           backref='user')
