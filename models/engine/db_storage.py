@@ -25,16 +25,16 @@ class DBStorage:
     """
     Handles Database engine
     Attributes:
-	__engine: engine for the database
-	__session: session of the database
+	    __engine: engine for the database
+	    __session: session of the database
     """
 
     __engine = None
     __session = None
 
     def __init__(self):
-        """
-        Init
+        """Instantiate
+        Create engine for database
         """
 
         self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'
