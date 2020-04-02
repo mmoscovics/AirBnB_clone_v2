@@ -11,8 +11,8 @@ class City(BaseModel, Base):
     Attributes:
         state_id: The state id
         name: input name
-	places: relationship with place
-	__tablename__: cities table for database
+        places: relationship with place
+        __tablename__: cities table for database
     """
     __tablename__ = 'cities'
 
