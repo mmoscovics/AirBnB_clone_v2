@@ -16,6 +16,8 @@ class User(BaseModel, Base):
         password: password for you login
         first_name: first name
         last_name: last name
+	places: relationship to place
+	reviews: relationship to review
     """
 
     __tablename__ = 'users'

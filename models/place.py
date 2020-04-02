@@ -36,6 +36,8 @@ class Place(BaseModel, Base):
         latitude: latitude in flaot
         longitude: longitude in float
         amenity_ids: list of Amenity ids
+        reviews: relationship with reviews
+        amenities: relationship with amenities
     """
 
     __tablename__ = 'places'
@@ -67,16 +69,14 @@ class Place(BaseModel, Base):
 
     @property
     def amenities(self):
-        """
-        Returns the list of Amenity instances 
+        """Returns the list of Amenity instances 
         based on the attribute amenity_ids
         """
         return self.amenity_ids
 
     @amenities.setter
     def amenities(self, obj):
-        """
-        Add id to amenity_ids
+        """Add id to amenity_ids
         """
         for key, value in models.storage.all(Amenity):
                 if value.amenity_id == amenity.id:

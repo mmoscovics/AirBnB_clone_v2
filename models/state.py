@@ -12,6 +12,8 @@ class State(BaseModel, Base):
     """This is the class for State
     Attributes:
         name: input name
+        __tablename__: name for db table
+        cities: relation with city
     """
     __tablename__ = 'states'
 
@@ -22,9 +24,9 @@ class State(BaseModel, Base):
     else:
         @property
         def cities(self):
-            """
-            Returns the list of City instances with
+            """Returns the list of City instances with
             state_id equals to the current State.id
+            city_list: list of cities from a state
             """
             city_list = []
 

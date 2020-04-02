@@ -11,6 +11,7 @@ class Amenity(BaseModel, Base):
     """This is the class for Amenity
     Attributes:
         name: input name
+	__tablename__: amenities table for database
     """
 
     __tablename__ = 'amenities'
