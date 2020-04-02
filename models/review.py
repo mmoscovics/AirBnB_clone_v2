@@ -11,7 +11,7 @@ class Review(BaseModel, Base):
         place_id: place id
         user_id: user id
         text: review description
-	__tablename__: name for table for datebase
+        __tablename__: name for table for datebase
     """
 
     __tablename__ = "reviews"
