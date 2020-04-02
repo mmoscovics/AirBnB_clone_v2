@@ -74,26 +74,22 @@ class DBStorage:
         return return_dict
 
     def new(self, obj):
-        """
-        Adds the object to the current database session
+        """Adds the object to the current database session
         """
         self.__session.add(obj)
 
     def save(self):
-        """
-        Commit all changes of the current database session
+        """Commit all changes of the current database session
         """
         self.__session.commit()
 
     def delete(self, obj=None):
-        """
-        Deletes from the current database session
+        """Deletes from the current database session
         """
         self.__session.delete(obj)
 
     def reload(self):
-        """
-        Create all tables in the database
+        """Create all tables in the database
         """
         Base.metadata.create_all(self.__engine)
         session_maker = sessionmaker(bind=self.__engine,
