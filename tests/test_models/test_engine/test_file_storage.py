@@ -44,6 +44,7 @@ class TestFileStorage(unittest.TestCase):
         p = style.check_files(['models/engine/file_storage.py'])
         self.assertEqual(p.total_errors, 0, "fix pep8")
 
+    @unittest.skipIf(os.getenv("HBNB_TYPE_STORAGE") == 'db', 'Wrong engine')
     def test_all(self):
         """tests if all works in File Storage"""
         storage = FileStorage()
