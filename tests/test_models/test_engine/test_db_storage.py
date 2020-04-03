@@ -36,7 +36,6 @@ class TestDatabaseStorage(unittest.TestCase):
 
     @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db',
                      'db engine not being used')
-
     def test_all(self):
         """tests all in File Storage"""
         storage = DBStorage()
@@ -47,7 +46,7 @@ class TestDatabaseStorage(unittest.TestCase):
         storage.save()
         self.assertsIs(len(storage.all()), obj_length + 1)
 
-def test_pep8_dbstorage(self):
+    def test_pep8_dbstorage(self):
         """Testing the pep8 linter requirments."""
         pep8style = pep8.StyleGuide(quiet=True)
         result = pep8style.check_files(['models/engine/db_storage.py'])
