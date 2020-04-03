@@ -13,9 +13,6 @@ from models.city import City
 from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, Float, String, ForeignKey, Table
-from sqlalchemy.orm import relationship
 
 
 class TestDatabaseStorage(unittest.TestCase):
@@ -32,32 +29,27 @@ class TestDatabaseStorage(unittest.TestCase):
         cls.user.email = "1234@yahoo.com"
         cls.storage = DBStorage()
 
-    def setUp(self):
-        """
-        Setup unit test
-        """
-
     @classmethod
     def teardown(cls):
-        """at the end of the test this will tear it down"""
+        """at the end of the test this will tear it down."""
         del cls.user
 
-    @unittest.skipIf(os.getenv("HBNB_TYPE_STORAGE") != "db",
-                     "db isn't being used")
+    @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') != 'db',
+                     'db engine not being used')
+
     def test_all(self):
-        """tests if all works in File Storage"""
+        """tests all in File Storage"""
         storage = DBStorage()
-        obj = storage.all()
-        self.assertIsNotNone(obj)
-        self.assertEqual(type(obj), dict)
-        self.assertIs(obj, storage._DBStorage__objects)
+        storage.reload()
+        obj_length = len(storage.all())
+        state = State(name="Connecticut")
+        state.save()
+        storage.save()
+        self.assertsIs(len(storage.all()), obj_length + 1)
 
-    def test_pep8_DBStorage(self):
-        """Tests pep8 style"""
-        style = pep8.StyleGuide(quiet=True)
-        p = style.check_files(['models/engine/db_storage.py'])
-        self.assertEqual(p.total_errors, 0, "fix pep8")
-
-
-if __name__ == "__main__":
-    unittest.main()
+def test_pep8_dbstorage(self):
+        """Testing the pep8 linter requirments."""
+        pep8style = pep8.StyleGuide(quiet=True)
+        result = pep8style.check_files(['models/engine/db_storage.py'])
+        self.assertEqual(result.total_errors, 0,
+                         'Found pep8 style errors')
