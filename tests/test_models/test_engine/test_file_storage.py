@@ -52,6 +52,7 @@ class TestFileStorage(unittest.TestCase):
         self.assertEqual(type(obj), dict)
         self.assertIs(obj, storage._FileStorage__objects)
 
+    @unittest.skipIf(os.getenv("HBNB_TYPE_STORAGE") == 'db', 'Wrong engine')
     def test_new(self):
         """test when new is created"""
         storage = FileStorage()
