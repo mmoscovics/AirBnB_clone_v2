@@ -7,6 +7,10 @@ env.hosts = ['localhost']
 
 
 def do_pack():
+    '''
+    Fabric script that generates a .tgz archive from the
+    contents of the web_static
+    '''
     try:
         filepath = 'versions/web_static_' + datetime.now().\
                    strftime('%Y%m%d%H%M%S') + '.tgz'
