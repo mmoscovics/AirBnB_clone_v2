@@ -32,7 +32,10 @@ def python_text(text='is cool'):
 @app.route('/number/<n>')
 def number(n):
     """Displays integer followed by is a number"""
-    return "{} is a number".format(int(n))
+    if type(n) is int:
+        return "{} is a number".format(n)
+    else:
+        abort(404)
 
 if __name__ == "__main__":
     app.url_map.strict_slashes = False
