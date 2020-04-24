@@ -96,3 +96,8 @@ class DBStorage:
                                      expire_on_commit=False)
         session_scoped = scoped_session(session_maker)
         self.__session = session_scoped()
+
+    def close(self):
+        """Call Remove on __session or Close on Class Session
+        """
+        self.__session.close()
